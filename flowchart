@@ -1,0 +1,63 @@
+flowchart TB
+    subgraph "Data Generation"
+        LG[Log Generator] --> |writes| Logs[(Log Files)]
+        LG --> |produces| KF[Kafka]
+    end
+    
+    subgraph "Data Processing"
+        LA[Log Analyzer] --> |reads| Logs
+        LA --> |consumes| KF
+        LA --> |indexes| ES[(Elasticsearch)]
+        LA --> |stores anomalies| ES
+    end
+    
+    subgraph "Visualization & Monitoring"
+        ES --> KB[Kibana]
+        ES --> GF[Grafana]
+        KF --> KU[Kafka UI]
+    end
+    
+    subgraph "Setup & Configuration"
+        KS[Kibana Setup] --> KB
+        GS[Grafana Setup] --> GF
+    end
+    
+    subgraph "User Access"
+        ING[Ingress] --> KB
+        ING --> GF
+        ING --> KU
+        ING --> ES
+    end
+    
+    style LG fill:#f96,stroke:#333
+    style LA fill:#f96,stroke:#333
+    style ES fill:#9cf,stroke:#333
+    style KF fill:#9cf,stroke:#333
+    style KB fill:#c9f,stroke:#333
+    style GF fill:#c9f,stroke:#333
+    style KU fill:#c9f,stroke:#333
+    style Logs fill:#fc9,stroke:#333
+
+
+    ├── docker-compose.yml                  # Main docker-compose file with all services
+    ├── log-files/                          # Shared volume for logs
+    ├── log-generator/
+    │   ├── Dockerfile                      # Java log generator with Kafka integration
+    │   └── LogGenerator.java               # Log generator source code
+    ├── log-analyzer/
+    │   ├── Dockerfile                      # Python log analyzer with Kafka & ES
+    │   └── analyzer.py                     # Log analyzer with dual-source processing
+    ├── kibana-setup/
+    │   ├── Dockerfile                      # Kibana setup container
+    │   └── kibana_setup.py                 # Python script for Kibana configuration
+    └── grafana-setup/
+        ├── Dockerfile                      # Grafana setup container
+        └── grafana_setup.py                # Python script for Grafana configuration
+    └── grafana/
+        └── provisioning/
+            └── datasources/                # Grafana datasource provisioning
+                └── elasticsearch.yml       # Elasticsearch datasource config
+    ```
+
+
+

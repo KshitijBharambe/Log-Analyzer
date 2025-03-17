@@ -1,0 +1,49 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Object files
+*.o
+*.obj
+
+# Executable files
+*.exe
+*.dll
+*.so
+
+# Temporary files
+*~
+.*.swp
+*.tmp
+*.bak
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml
+*.DS_Store
+
+# Build artifacts
+target/
+build/
+dist/
+
+# Docker volumes
+esdata/
+grafana-data/
+
+# Environment variables
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+
+log-files
+log-files
